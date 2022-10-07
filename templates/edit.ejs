@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Coment</title>
+</head>
+<body>
+    <h1>Add Coment</h1>
+    <form action="/edit/<%=body.id%>" method="POST">
+        <input type="text" name="name" placeholder="Name" value="<%=body.name%>" required>
+        <input type="text" name="coment" placeholder="Coment" value="<%=body.coment%>" required>
+        <button>Edit</button>
+    </form>
+
+    <%if(error){%>
+        <h3><%=error.message%></h3>
+    <%}%>
+</body>
+</html>

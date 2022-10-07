@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coments</title>
+</head>
+<body>
+    <h1>Coments</h1>
+
+    <a href="/add">Add Coment</a>
+
+    <%for(let i = 0; i < coments.length; i++){%>
+        <div id="<%=coments[i]._id%>">
+            <h3><%=coments[i].name%></h3>
+            <p><%=coments[i].coment%></p>
+            <a href="/edit/<%=coments[i]._id%>">Edit</a>
+            <button onclick="deleteComent('<%=coments[i]._id%>')">Delete</button>
+        </div>
+    <%}%>
+
+
+    <script>
+        function deleteComent(id){
+            fetch('/' + id, {method:'DELETE'}).then((res) => {
+                if(res.status == 200){
+                    res.text().then((comentId) => {
+                        document.getElementById(comentId).remove();
+                    })
+                }else{
+                    res.json().then((error) => {
+                        alert(`Error: ${error.kind}`)
+                    })
+                }
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,17 +1,8 @@
-module.exports = {
-    coments : [
-        
-    ],
+const mongoose = require('mongoose');
 
-    getAll(){
-        return this.coments;
-    },
+const comentSchema = new mongoose.Schema({
+    name: {type:String, required:true},
+    coment: {type:String, required:true}
+});
 
-    newComent(nome, description){
-        this.coments.push({id:randomId(), nome, description})
-    }
-}
-
-function randomId(){
-    return Math.random().toString(36).substring(2,9);
-}
+module.exports = mongoose.model('Coment', comentSchema);
