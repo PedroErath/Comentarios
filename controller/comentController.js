@@ -1,8 +1,8 @@
-const Coment = require('../model/coment');
+const Coment = require('../model/comentModel');
 
 const addComent = async (req, res) => {
     let coment = new Coment(req.body);
-
+    
     try {
         await coment.save();
         res.redirect('/')
@@ -20,16 +20,27 @@ const allComents = async (req, res) => {
     }
 };
 
-const loadComent = async (req, res) => {
+const deleteComent = async (req, res) => {
     let id = req.params.id;
 
     try {
-        let doc = await Coment.findById(id);
-        res.render('edit', {error:false, body: doc})
+        await Coment.findByIdAndDelete(id);
+        res.send(id);
     } catch (error) {
         res.send(error);
     }
 };
+
+const loadComent = async (req, res) => {
+    let id = req.params.id;
+
+    try {
+        let coment = await Coment.findById(id);
+        res.render('edit', {error: false, body: coment})
+    } catch (error) {
+        res.send(error);
+    }
+}
 
 const editComent = async (req, res) => {
     let id = req.params.id;
@@ -41,19 +52,8 @@ const editComent = async (req, res) => {
         await Coment.updateOne({_id:id}, coment);
         res.redirect('/');
     } catch (error) {
-        res.render('edit', {error, body:req.body});
-    }
-};
-
-const deleteComent = async (req, res) => {
-    let id = req.params.id;
-
-    try {
-        await Coment.findByIdAndDelete(id);
-        res.send(id)
-    } catch (error) {
         res.send(error);
     }
 };
 
-module.exports = {addComent, allComents, loadComent, editComent, deleteComent};
+module.exports = {addComent, allComents, deleteComent, loadComent, editComent};
