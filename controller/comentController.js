@@ -2,19 +2,19 @@ const Coment = require('../model/comentModel');
 
 const addComent = async (req, res) => {
     let coment = new Coment(req.body);
-    
+
     try {
         await coment.save();
         res.redirect('/')
     } catch (error) {
-        res.render('add', {error, body:req.body});
+        res.render('add', { error, body: req.body });
     }
 };
 
 const allComents = async (req, res) => {
     try {
         let coments = await Coment.find({});
-        res.render('all', {coments});
+        res.render('all', { coments });
     } catch (error) {
         res.send(error);
     }
@@ -36,7 +36,7 @@ const loadComent = async (req, res) => {
 
     try {
         let coment = await Coment.findById(id);
-        res.render('edit', {error: false, body: coment})
+        res.render('edit', { error: false, body: coment })
     } catch (error) {
         res.send(error);
     }
@@ -49,11 +49,11 @@ const editComent = async (req, res) => {
     coment.coment = req.body.coment;
 
     try {
-        await Coment.updateOne({_id:id}, coment);
+        await Coment.updateOne({ _id: id }, coment);
         res.redirect('/');
     } catch (error) {
         res.send(error);
     }
 };
 
-module.exports = {addComent, allComents, deleteComent, loadComent, editComent};
+module.exports = { addComent, allComents, deleteComent, loadComent, editComent };
